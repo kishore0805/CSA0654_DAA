@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+// Recursive function to print numbers from 1 to currentRow
+void printRow(int currentRow, int maxRow) {
+    if (currentRow > maxRow) {
+        return;
+    }
+    
+    // Print numbers from 1 to currentRow
+    for (int j = 1; j <= currentRow; j++) {
+        printf("%d ", j);
+    }
+    printf("\n");
+    
+    // Recursive call to print the next row
+    printRow(currentRow + 1, maxRow);
+}
+
+// Main function to initialize and call the recursive function
+int main() {
+    int n = 4;  // Number of rows
+    printRow(1, n);  // Start with the first row
+    return 0;
+}

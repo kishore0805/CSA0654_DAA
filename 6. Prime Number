@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+// Recursive function to check for prime
+int isPrime(int num, int i) {
+    // Base cases
+    if (num <= 2) {
+        return (num == 2) ? 1 : 0; // 2 is prime, 1 and below are not
+    }
+    if (num % i == 0) {
+        return 0; // Not prime if divisible by i
+    }
+    if (i * i > num) {
+        return 1; // If no divisor found till sqrt(num), it's prime
+    }
+    // Recursive case
+    return isPrime(num, i + 1);
+}
+
+int main() {
+    int num;
+    printf("Enter a number: ");
+    scanf("%d", &num);
+
+    if (isPrime(num, 2)) {
+        printf("%d is a prime number.\n", num);
+    } else {
+        printf("%d is not a prime number.\n", num);
+    }
+
+    return 0;
+}

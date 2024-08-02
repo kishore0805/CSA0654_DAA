@@ -1,0 +1,42 @@
+#include <stdio.h>
+
+#define MAX 100
+
+// Function to print a subset
+void printSubset(int subset[], int subsetSize) {
+    for (int i = 0; i < subsetSize; i++) {
+        printf("%d ", subset[i]);
+    }
+    printf("\n");
+}
+
+// Recursive function to find subsets
+void findSubsets(int arr[], int n, int index, int subset[], int subsetSize, int sum, int targetSum) {
+    if (sum == targetSum) {
+        printSubset(subset, subsetSize);
+        return;
+    }
+    
+    if (index == n || sum > targetSum) {
+        return;
+    }
+    
+    // Include the current element in the subset
+    subset[subsetSize] = arr[index];
+    findSubsets(arr, n, index + 1, subset, subsetSize + 1, sum + arr[index], targetSum);
+    
+    // Exclude the current element from the subset
+    findSubsets(arr, n, index + 1, subset, subsetSize, sum, targetSum);
+}
+
+int main() {
+    int arr[] = {3, 34, 4, 12, 5, 2};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int targetSum = 9;
+    int subset[MAX];
+    
+    printf("Subsets with sum %d:\n", targetSum);
+    findSubsets(arr, n, 0, subset, 0, 0, targetSum);
+    
+    return 0;
+}

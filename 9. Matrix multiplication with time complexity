@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+// Function to multiply two matrices
+void multiplyMatrices(int **a, int **b, int **c, int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            c[i][j] = 0;
+            for (int k = 0; k < n; k++) {
+                c[i][j] += a[i][k] * b[k][j];
+            }
+        }
+    }
+}
+
+// Function to allocate memory for a matrix
+int** allocateMatrix(int n) {
+    int **matrix = (int **)malloc(n * sizeof(int *));
+    for (int i = 0; i < n; i++) {
+        matrix[i] = (int *)malloc(n * sizeof(int));
+    }
+    return matrix;
+}
+
+// Function to deallocate memory for a matrix
+void freeMatrix(int **matrix, int n) {
+    for (int i = 0; i < n; i++) {
+        free(matrix[i]);
+    }
+    free(matrix);
+}
+
+// Function to fill a matrix with random values
+void fillMatrix(int **matrix, int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            matrix[i][j] = rand() % 100;
+        }
+    }
+}
+
+int main() {
+    int n;
+
+    printf("Enter the size of the matrices (n x n): ");
+    scanf("%d", &n);
+
+    // Allocate memory for matrices
+    int **a = allocateMatrix(n);
+    int **b = allocateMatrix(n);
+    int **c = allocateMatrix(n);
+
+    // Fill matrices with random values
+    srand(time(0));
+    fillMatrix(a, n);
+    fillMatrix(b, n);
+
+    // Measure the time taken for matrix multiplication
+    clock_t start = clock();
+    multiplyMatrices(a, b, c, n);
+    clock_t end = clock();
+
+    double time_spent = (double)(start - end) / CLOCKS_PER_SEC;
+
+    printf("Time taken for matrix multiplication of size %d x %d: %f seconds\n", n, n, time_spent);
+
+    // Deallocate memory for matrices
+    freeMatrix(a, n);
+    freeMatrix(b, n);
+    freeMatrix(c, n);
+
+    return 0;
+}

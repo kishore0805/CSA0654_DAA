@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+// Function to reverse a number
+int reverse(int n) {
+    static int reversed = 0;
+    static int factor = 1;
+
+    if (n == 0) {
+        return reversed;
+    } else {
+        reversed = reversed * 10 + n % 10;
+        factor *= 10;
+        return reverse(n / 10);
+    }
+}
+
+int main() {
+    int number = 12345;
+    printf("Reverse of %d is %d\n", number, reverse(number));
+    return 0;
+}

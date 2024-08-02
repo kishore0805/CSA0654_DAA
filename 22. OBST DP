@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <limits.h>
+
+// Function to find the minimum cost of constructing a BST
+int optimalBST(int keys[], int freq[], int n) {
+    int cost[n][n];
+    int i, j, k, l, range;
+
+    // Initialize the cost matrix
+    for (i = 0; i < n; i++) {
+        cost[i][i] = freq[i];
+        for (j = i + 1; j < n; j++) {
+            cost[i][j] = INT_MAX;
+        }
+    }
+
+    // Fill the cost matrix
+    for (range = 2; range <= n; range++) {
+        for (i = 0; i <= n - range; i++) {
+            j = i + range - 1;
+            for (k = i; k <= j; k++) {
+                int c = ((k > i) ? cost[i][k-1] : 0) +
+                        ((k < j) ? cost[k+1][j] : 0) +
+                        freq[k];
+                if (c < cost[i][j]) {
+                    cost[i][j] = c;
+                }
+            }
+        }
+    }
+
+    return cost[0][n-1];
+}
+
+int main() {
+    int keys[] = {10, 12, 20};
+    int freq[] = {34, 8, 50};
+    int n = sizeof(keys) / sizeof(keys[0]);
+    printf("Minimum cost of the optimal BST: %d\n", optimalBST(keys, freq, n));
+    return 0;
+}
